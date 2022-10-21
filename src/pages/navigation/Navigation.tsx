@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
+import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { useAuthContext } from "../../InfiniteContext";
 
 const Navigation = () => {
@@ -14,7 +14,7 @@ const Navigation = () => {
     <BottomNavigation
       showLabels
       value={value}
-      onChange={(_, newValue) => {
+      onChange={(_: any, newValue: React.SetStateAction<number>) => {
         setValue(newValue);
       }}
       style={{
