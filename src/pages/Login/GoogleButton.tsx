@@ -33,9 +33,9 @@ const GoogleButton = (props: Props) => {
     <div>
       <GoogleLogin
         clientId={clientId}
-        responseType={"id_token"}
         onSuccess={onSuccess}
         onFailure={onFailure}
+        cookiePolicy={"single_host_origin"}
         buttonText="Google Login"
       />
     </div>
