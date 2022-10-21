@@ -25,7 +25,7 @@ const Navigation = () => {
       }}
     >
       <BottomNavigationAction label="Local" />
-      <BottomNavigationAction label="National" />
+      <BottomNavigationAction label="Global" />
       <BottomNavigationAction label="My Prayer" />
     </BottomNavigation>
   );
