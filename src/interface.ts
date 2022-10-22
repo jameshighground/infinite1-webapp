@@ -1,5 +1,9 @@
 import axios from "axios";
 
+export type MyPosition = {
+  real_lng: number;
+  real_lat: number;
+};
 export type SimplePrayType = {
   lat: number;
   lng: number;
@@ -13,7 +17,7 @@ export type PrayType = {
   real_lat: number;
   real_lng: number;
   content: string;
-  refId: number;
+  refid: number;
   craetedate: string;
   updatedate: string;
 };
