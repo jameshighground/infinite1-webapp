@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { PrayChain, PrayQuestionBoxContainer } from "./globalPrayStyle";
 import ReactMapGL, { Marker } from "react-map-gl";
 import { FmdGood } from "@mui/icons-material";
@@ -27,9 +27,14 @@ const GlobalPray = () => {
 
   const [viewport, setViewport] = useState({
     latitude: 37.5326,
-    longitude: 127.024612,
-    zoom: 12,
+    longitude: 127.024612
   });
+
+  const [country, setCountry] = useState({
+    label: 'United States'
+  });
+
+  const map:any = useRef();
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((e) => {
@@ -49,96 +54,36 @@ const GlobalPray = () => {
     <div>
       <Autocomplete
         disablePortal
-        id="combo-box-demo"
+        value={country}
+        id="combo-box-country"
         options={countries}
-        sx={{ width: 300 }}
-        renderInput={(params) => <TextField {...params} label="Movie" />}
+        sx={{ width: 300, position: 'absolute', zIndex: 20, backgroundColor: 'white', margin: '10px'}}
+        renderInput={(params) => <TextField {...params} label="Country" />}
+        onChange={(event: any, selectedCountry: any)=>{
+          setCountry(selectedCountry);
+          console.log(map);
+          map.current.flyTo({
+            center: [selectedCountry.longitude, selectedCountry.latitude],
+            essential: true,
+            duration: 2000,
+            zoom: 5,
+          });
+        }}
       ></Autocomplete>
       <ReactMapGL
         {...viewport}
         style={{ width: "100vw", height: "100vh" }}
         mapStyle="mapbox://styles/dayday-infinite/cl9irr2mo000w14qqyqmgvlpg"
         mapboxAccessToken={apiKey}
-        onClick={
-          tempPosition
-            ? (e) => {}
-            : (e) => {
-                setTempPosition({
-                  latitude: e.lngLat.lat,
-                  longitude: e.lngLat.lng,
-                });
-              }
-        }
+        projection='globe' //'albers' | 'equalEarth' | 'equirectangular' | 'lambertConformalConic' | 'mercator' | 'naturalEarth' | 'winkelTripel';
+        zoom={2}
         onMove={(evt) => setViewport(evt.viewState)}
+        ref={map}
       >
-        <Marker longitude={myPosition.longitude} latitude={myPosition.latitude}>
-          <FmdGood
-            className={"flip-in-ver-right"}
-            style={{
-              color: "red",
-              fontSize: 24,
-            }}
-          />
-        </Marker>
-        {tempPosition && (
-          <Marker
-            longitude={tempPosition.longitude}
-            latitude={tempPosition.latitude}
-            style={{
-              position: "relative",
-            }}
-          >
-            <FmdGood
-              className={"flip-in-ver-right"}
-              style={{
-                color: "green",
-                fontSize: 24,
-              }}
-            />
-          </Marker>
-        )}
-        {tempPosition && (
-          <Marker
-            longitude={tempPosition.longitude}
-            latitude={tempPosition.latitude}
-          >
-          </Marker>
-        )}
+        
       </ReactMapGL>
 
-      {selectedChain && (
-        <PrayChain>
-          <span>Pray Chain</span>
-        </PrayChain>
-      )}
-
-      <span
-        style={{
-          position: "fixed",
-          top: 10,
-          right: 10,
-          backgroundColor: "white",
-          cursor: "pointer",
-        }}
-        onClick={() => {
-          setTempPosition(null);
-          const newLongitude = Math.random() * 360 - 180;
-          const newLatitude = Math.random() * 180 - 90;
-
-          setViewport({
-            ...viewport,
-            longitude: newLongitude,
-            latitude: newLatitude,
-            zoom: 6,
-          });
-          setTempPosition({
-            longitude: newLongitude,
-            latitude: newLatitude,
-          });
-        }}
-      >
-        Recommend
-      </span>
+      
     </div>
   );
 };
