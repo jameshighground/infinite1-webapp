@@ -9,15 +9,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { TextField } from "@mui/material";
-import { useForm } from "react-hook-form";
 import axios from "axios";
 import { FC, useState } from "react";
 import styled from "styled-components";
 import useSWR, { mutate } from "swr";
 import { MyPosition, PrayType, swrFetcher } from "../../interface";
 import { useAuthContext } from "../../InfiniteContext";
-import { Simulate } from "react-dom/test-utils";
-import submit = Simulate.submit;
 import Column from "../Column";
 
 const Transition = React.forwardRef(function Transition(
