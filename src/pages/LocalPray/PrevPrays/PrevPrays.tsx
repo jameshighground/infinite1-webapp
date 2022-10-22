@@ -1,10 +1,10 @@
 import React, { FC, useState } from "react";
 import { Marker } from "react-map-gl";
-import { PrayType } from "../../../interface";
+import { SimplePrayType } from "../../../interface";
 import { FmdGood } from "@mui/icons-material";
 import ChainModal from "../../../components/modal/ChainModal";
 
-const PrevPrays: FC<{ prayData: PrayType; offTempPosition(): void }> = ({
+const PrevPrays: FC<{ prayData: SimplePrayType; offTempPosition(): void }> = ({
   prayData,
   offTempPosition,
 }) => {
@@ -27,10 +27,13 @@ const PrevPrays: FC<{ prayData: PrayType; offTempPosition(): void }> = ({
       />
       {isSelected && (
         <ChainModal
+          position={{
+            lat: prayData.lat,
+            lng: prayData.lng,
+          }}
           close={() => {
             setIsSelected(false);
           }}
-          prevText={prayData.content}
         />
       )}
     </Marker>

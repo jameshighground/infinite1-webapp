@@ -7,10 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { InfiniteProvider } from "./InfiniteContext";
 import "mapbox-gl/dist/mapbox-gl.css";
-
-// const root = ReactDOM.createRoot(
-//   document.getElementById("root") as HTMLElement
-// );
+import "react-toastify/dist/ReactToastify.css";
 
 ReactDOM.render(
   <React.StrictMode>

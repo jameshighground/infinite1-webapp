@@ -5,6 +5,7 @@ import Login from "./pages/Login/Login";
 import LocalPray from "./pages/LocalPray/LocalPray";
 import GlobalPray from "./pages/GlobalPray/GlobalPray";
 import Navigation from "./pages/navigation/Navigation";
+import MyPrayer from "./components/MyPrayer";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path={"/localPray"} element={<LocalPray />} />
         <Route path={"/globalPray"} element={<GlobalPray />} />
+        <Route path={"/my-prayer"} element={<MyPrayer />} />
         <Route path={"/login"} element={<Login />} />
         <Route path={"/"} element={<LocalPray />} />
       </Routes>

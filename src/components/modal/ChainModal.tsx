@@ -13,6 +13,8 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { FC } from "react";
 import styled from "styled-components";
+import useSWR from "swr";
+import { PrayType, swrFetcher } from "../../interface";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -37,17 +39,38 @@ const PrevPrayText = styled.div`
 `;
 
 const ChainModal: FC<{
-  prevText: string;
+  position: { lat: number; lng: number };
   close(): void;
-}> = ({ prevText, close }) => {
+}> = ({ position, close }) => {
   const [open, setOpen] = React.useState(true);
   const { register, handleSubmit } = useForm();
 
+  const email = localStorage.getItem("email");
+
+  const { data, error } = useSWR<Array<PrayType>>(
+    email ? `/api/v1/pray/${email}/${position.lat}/${position.lng}` : null,
+    swrFetcher
+  );
+  console.log(data);
   const onSubmit = async (data: any) => {
-    console.log(data);
-    const result = await axios.get("/api/v1/pray");
-    console.log(result);
+    const email = localStorage.getItem("email");
+    await axios
+      .post(
+        `/api/v1/${email}/pray`,
+        {},
+        { headers: { Authorization: `Bearer ${email}` } }
+      )
+      .then((res) => {
+        console.log("res: ", res);
+      });
   };
+
+  if (error) {
+  }
+
+  if (!data) {
+    return <div></div>;
+  }
 
   return (
     <div>
@@ -77,7 +100,9 @@ const ChainModal: FC<{
             </IconButton>
           </Toolbar>
         </AppBar>
-        <PrevPrayText>{prevText}</PrevPrayText>
+        {data.map((pray, index) => (
+          <PrevPrayText key={"pray" + index}>{pray.content}</PrevPrayText>
+        ))}
         <TextField
           variant="outlined"
           placeholder="Let's Pray"

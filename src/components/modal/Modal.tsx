@@ -27,9 +27,16 @@ const Modal: FC<{ close(): void }> = ({ close }) => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data: any) => {
-    console.log(data);
-    const result = await axios.get("/api/v1/pray");
-    console.log(result);
+    const email = localStorage.getItem("email");
+    await axios
+      .post(
+        `/api/v1/${email}/pray`,
+        {},
+        { headers: { Authorization: `Bearer ${email}` } }
+      )
+      .then((res) => {
+        console.log("res: ", res);
+      });
   };
 
   return (
