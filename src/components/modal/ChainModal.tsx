@@ -12,6 +12,7 @@ import { TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { FC } from "react";
+import styled from "styled-components";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -22,7 +23,23 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const Modal: FC<{ close(): void }> = ({ close }) => {
+const PrevPrayText = styled.div`
+  font-size: 1rem;
+  line-height: 1.4375em;
+  letter-spacing: 0.00938em;
+
+  border: 1px solid #c9c9c9;
+  border-radius: 4px;
+
+  margin: 40px;
+  padding: 16.5px 14px;
+  color: rgba(0, 0, 0, 0.87);
+`;
+
+const ChainModal: FC<{
+  prevText: string;
+  close(): void;
+}> = ({ prevText, close }) => {
   const [open, setOpen] = React.useState(true);
   const { register, handleSubmit } = useForm();
 
@@ -34,9 +51,6 @@ const Modal: FC<{ close(): void }> = ({ close }) => {
 
   return (
     <div>
-      {/*<Button variant="outlined" onClick={handleClickOpen}>*/}
-      {/*  Open full-screen dialog*/}
-      {/*</Button>*/}
       <Dialog
         fullScreen
         open={open}
@@ -50,7 +64,7 @@ const Modal: FC<{ close(): void }> = ({ close }) => {
               variant="h6"
               component="div"
             >
-              Start New Prayer Chain
+              Carry on this Prayer Chain
             </Typography>
             <IconButton
               edge="end"
@@ -63,6 +77,7 @@ const Modal: FC<{ close(): void }> = ({ close }) => {
             </IconButton>
           </Toolbar>
         </AppBar>
+        <PrevPrayText>{prevText}</PrevPrayText>
         <TextField
           variant="outlined"
           placeholder="Let's Pray"
@@ -91,4 +106,4 @@ const Modal: FC<{ close(): void }> = ({ close }) => {
   );
 };
 
-export default Modal;
+export default ChainModal;

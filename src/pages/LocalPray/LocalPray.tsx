@@ -1,15 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { PrayChain, PrayQuestionBoxContainer } from "./localPrayStyle";
+import { PrayChain } from "./localPrayStyle";
 import ReactMapGL, { Marker } from "react-map-gl";
 import { FmdGood } from "@mui/icons-material";
-import Column from "../../components/Column";
 import PrayQuestionBox from "./PrayQuestionBox";
+import mapboxgl from "mapbox-gl";
+import Modal from "../../components/modal/Modal";
+import { set } from "react-hook-form";
+import RecommendButton from "./RecommendButton/RecommendButton";
+import { PrayType } from "../../interface";
+import { dummyData } from "./dummyData";
+import PrevPrays from "./PrevPrays/PrevPrays";
 
 const apiKey =
   "pk.eyJ1IjoiZGF5ZGF5LWluZmluaXRlIiwiYSI6ImNsOWlyZjY2ajBlbGszcG9kb2Rjd3pvYzkifQ.M7sMVIworroHZGarmPwvmQ";
 
 const LocalPray = () => {
-  const [selectedChain, setSelectedChain] = useState<string>("");
+  const [isSelected, setIsSelected] = useState<boolean>(false);
+  const [map, setMap] = useState<mapboxgl.Map | null>(null);
+
+  const [prevPrayData, setPrevPrayData] = useState<Array<PrayType>>(dummyData);
 
   const [myPosition, setMyPosition] = useState<{
     latitude: number;
@@ -61,6 +70,11 @@ const LocalPray = () => {
                 });
               }
         }
+        onLoad={(e) => {
+          if (e.target) {
+            setMap(e.target);
+          }
+        }}
         onMove={(evt) => setViewport(evt.viewState)}
       >
         <Marker longitude={myPosition.longitude} latitude={myPosition.latitude}>
@@ -95,47 +109,38 @@ const LocalPray = () => {
             latitude={tempPosition.latitude}
           >
             <PrayQuestionBox
+              select={() => {
+                setIsSelected(true);
+              }}
               cancelTemp={() => {
                 setTempPosition(null);
               }}
             />
           </Marker>
         )}
+
+        {prevPrayData.map((prayPoint, index) => (
+          <PrevPrays
+            key={"pray" + index}
+            prayData={prayPoint}
+            offTempPosition={() => {
+              setTimeout(() => {
+                setTempPosition(null);
+              }, 100);
+            }}
+          />
+        ))}
       </ReactMapGL>
 
-      {selectedChain && (
-        <PrayChain>
-          <span>Pray Chain</span>
-        </PrayChain>
+      {isSelected && (
+        <Modal
+          close={() => {
+            setIsSelected(false);
+          }}
+        />
       )}
 
-      <span
-        style={{
-          position: "fixed",
-          top: 10,
-          right: 10,
-          backgroundColor: "white",
-          cursor: "pointer",
-        }}
-        onClick={() => {
-          setTempPosition(null);
-          const newLongitude = Math.random() * 360 - 180;
-          const newLatitude = Math.random() * 180 - 90;
-
-          setViewport({
-            ...viewport,
-            longitude: newLongitude,
-            latitude: newLatitude,
-            zoom: 6,
-          });
-          setTempPosition({
-            longitude: newLongitude,
-            latitude: newLatitude,
-          });
-        }}
-      >
-        Recommend
-      </span>
+      {map && <RecommendButton setTempPosition={setTempPosition} map={map} />}
     </div>
   );
 };
