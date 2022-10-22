@@ -1,29 +1,47 @@
-import { createContext, FC, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  FC,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import axios from "axios";
 
 type AuthContextType = {
-  myId: string;
+  myEmail: string;
+  setMyEmail(e: string): void;
   screenIndex: number;
   setActiveTab: Function;
 };
 
 const initialAuthContext = {
-  myId: "",
+  myEmail: "",
   screenIndex: 0,
   setActiveTab: (value: number) => {},
+  setMyEmail: (e: string) => {},
 };
 
 const AuthContext = createContext<AuthContextType>(initialAuthContext);
 
 export const InfiniteProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [myId, setMyId] = useState<string>("");
+  const [myEmail, setMyEmail] = useState<string>("");
   const [screenIndex, setScreenIndex] = useState<number>(0);
 
+  useEffect(() => {
+    const email = localStorage.getItem("email");
+    if (email) {
+      setMyEmail(email);
+    }
+  }, []);
   axios.defaults.baseURL = "https://infinite1.app";
+  axios.defaults.headers.common["Authorization"] = `Bearer ${myEmail ?? ""}`;
+
   return (
     <AuthContext.Provider
       value={{
-        myId,
+        myEmail,
+        setMyEmail,
         screenIndex,
         setActiveTab: (value: number) => setScreenIndex(value),
       }}

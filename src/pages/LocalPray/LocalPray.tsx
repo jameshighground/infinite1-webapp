@@ -140,6 +140,10 @@ const LocalPray = () => {
                 setTempPosition(null);
               }, 100);
             }}
+            myPosition={{
+              real_lng: myPosition.longitude,
+              real_lat: myPosition.latitude,
+            }}
           />
         ))}
       </ReactMapGL>

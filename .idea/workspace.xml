@@ -3,14 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="61981b31-5de4-468a-85d9-60946976d658" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/InfiniteContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/InfiniteContext.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/modal/ChainModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/modal/ChainModal.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/interface.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/LocalPray/LocalPray.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LocalPray/LocalPray.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/LocalPray/PrevPrays/PrevPrays.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LocalPray/PrevPrays/PrevPrays.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/LocalPray/dummyData.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Login/GoogleButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Login/GoogleButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Login/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Login/Login.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +72,7 @@
       <updated>1666389850760</updated>
       <workItem from="1666389853616" duration="8887000" />
       <workItem from="1666414376060" duration="1766000" />
-      <workItem from="1666416825898" duration="3616000" />
+      <workItem from="1666416825898" duration="7472000" />
     </task>
     <servers />
   </component>
