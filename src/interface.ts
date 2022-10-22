@@ -20,6 +20,9 @@ export type PrayType = {
   refid: number;
   craetedate: string;
   updatedate: string;
+
+  amen: number;
+  amenyn: 1 | 0;
 };
 
 export const swrFetcher = async (url: string) => {

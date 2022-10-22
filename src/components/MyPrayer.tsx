@@ -1,46 +1,54 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Box } from "@mui/system";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHandsPraying, faReply } from "@fortawesome/free-solid-svg-icons";
+import { faHandsPraying } from "@fortawesome/free-solid-svg-icons";
 import { Button, IconButton } from "@mui/material";
-import axios from "axios";
+import useSWR from "swr";
+import { PrayType, swrFetcher } from "../interface";
+import { useAuthContext } from "../InfiniteContext";
 
 export default function MyPrayer() {
-  const [list, setList] = useState([]);
+  const { myEmail } = useAuthContext();
 
+  const { data, error } = useSWR<Array<PrayType>>(
+    myEmail ? `/api/v1/${myEmail}/pray` : null,
+    swrFetcher
+  );
   useEffect(() => {
     AOS.init();
   });
 
-  useEffect(() => {
-    initUserList();
-  }, [setList]);
-
-  async function initUserList() {
-    const { data } = await axios.get("/api/v1/pray");
-    console.log("data >>", data);
-    setList(data);
+  if (!data) {
+    return <div></div>;
   }
 
   return (
-    <>
-      <Box sx={{ width: "100%" }}>
-        {list.map((item: any) => (
+    <div style={{ paddingTop: 32, overflow: "auto" }}>
+      <span
+        style={{
+          fontSize: 32,
+          marginBottom: 16,
+          fontWeight: "bold",
+        }}
+      >
+        My Prayers
+      </span>
+      <Box sx={{ width: "100%", marginTop: 6 }}>
+        {data.map((item) => (
           <PrayItem key={item.id} item={item} />
         ))}
       </Box>
       <Box sx={{ height: "56px" }}></Box>
-    </>
+    </div>
   );
 }
 type Props = {
-  item: any;
+  item: PrayType;
 };
 
 function PrayItem({ item }: Props) {
-  console.log("item >>", item);
   const latLng = {
     lat: item.lat,
     lng: item.lng,
@@ -62,13 +70,22 @@ function PrayItem({ item }: Props) {
         padding: "20px",
         display: "flex",
         flexDirection: "column",
+        cursor: "pointer",
       }}
       onClick={handleClick}
     >
       <Box sx={{ textAlign: "left" }}>{item.content}</Box>
-      <Box sx={{ width: "100%", marginTop: "auto", display: "flex", justifyContent: "end", alignItems: "center" }}>
+      <Box
+        sx={{
+          width: "100%",
+          marginTop: "auto",
+          display: "flex",
+          justifyContent: "end",
+          alignItems: "center",
+        }}
+      >
         <Box></Box>
-        <Box>43</Box>
+        <Box>{item.amen ?? 0}</Box>
         <IconButton color="primary">
           <FontAwesomeIcon icon={faHandsPraying} />
         </IconButton>

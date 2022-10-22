@@ -16,6 +16,7 @@ import useSWR, { mutate } from "swr";
 import { MyPosition, PrayType, swrFetcher } from "../../interface";
 import { useAuthContext } from "../../InfiniteContext";
 import Column from "../Column";
+import dayjs from "dayjs";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -113,7 +114,14 @@ const ChainModal: FC<{
           }}
         >
           {data.map((pray, index) => (
-            <PrevPrayText key={"pray" + index}>{pray.content}</PrevPrayText>
+            <PrevPrayText key={"pray" + index}>
+              <Column gap={16}>
+                <span>{pray.content}</span>
+                <span style={{ marginLeft: "auto", fontSize: 12 }}>
+                  {dayjs(pray.craetedate).format("YYYY/MM/DD h:mm A")}
+                </span>
+              </Column>
+            </PrevPrayText>
           ))}
         </Column>
         <TextField
@@ -122,6 +130,7 @@ const ChainModal: FC<{
           multiline
           rows={8}
           sx={{ padding: 5 }}
+          value={prayText}
           onChange={(e) => {
             setPrayText(e.target.value);
           }}
