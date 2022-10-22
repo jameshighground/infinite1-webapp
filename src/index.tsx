@@ -9,6 +9,13 @@ import { InfiniteProvider } from "./InfiniteContext";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "react-toastify/dist/ReactToastify.css";
 
+<<<<<<< HEAD
+=======
+// const root = ReactDOM.createRoot(
+//   document.getElementById("root") as HTMLElement
+// );
+
+>>>>>>> ff52da5054fdab19679ebb9275fda353f2b202e1
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>

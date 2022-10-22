@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { useAuthContext } from "../../InfiniteContext";
+import { Screen } from "../../common/screen";
+import { Link } from 'react-router-dom';
 
 const Navigation = () => {
   const [value, setValue] = useState(0);
@@ -14,7 +16,11 @@ const Navigation = () => {
     <BottomNavigation
       showLabels
       value={value}
+<<<<<<< HEAD
       onChange={(_: any, newValue: number) => {
+=======
+      onChange={(_: any, newValue: React.SetStateAction<number>) => {
+>>>>>>> ff52da5054fdab19679ebb9275fda353f2b202e1
         setValue(newValue);
       }}
       style={{
@@ -24,9 +30,9 @@ const Navigation = () => {
         bottom: 0,
       }}
     >
-      <BottomNavigationAction label="Local" />
-      <BottomNavigationAction label="National" />
-      <BottomNavigationAction label="My Prayer" />
+      <BottomNavigationAction label="Local" value={Screen.local.slug} component={Link} to={'/'+Screen.local.slug} />
+      <BottomNavigationAction label="Global" value={Screen.global.slug} component={Link} to={'/'+Screen.global.slug} />
+      <BottomNavigationAction label="My Prayer" value={Screen.myPrayer.slug} component={Link} to={'/'+Screen.myPrayer.slug} />
     </BottomNavigation>
   );
 };
