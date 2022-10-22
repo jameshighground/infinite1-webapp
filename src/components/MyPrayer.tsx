@@ -30,29 +30,6 @@ export default function MyPrayer() {
         {list.map((item: any) => (
           <PrayItem key={item.id} item={item} />
         ))}
-        {/* <PrayItem />
-        <PrayItem />
-        <PrayItem />
-        <PrayItem />
-        <PrayItem />
-        <PrayItem />
-        <PrayItem />
-        <PrayItem />
-        <PrayItem />
-        <PrayItem />
-        <PrayItem />
-        <PrayItem />
-        <PrayItem />
-        <PrayItem />
-        <PrayItem />
-        <PrayItem />
-        <PrayItem />
-        <PrayItem />
-        <PrayItem />
-        <PrayItem />
-        <PrayItem />
-        <PrayItem />
-        <PrayItem /> */}
       </Box>
       <Box sx={{ height: "56px" }}></Box>
     </>
@@ -95,9 +72,6 @@ function PrayItem({ item }: Props) {
         <IconButton color="primary">
           <FontAwesomeIcon icon={faHandsPraying} />
         </IconButton>
-        {/* <IconButton>
-          <FontAwesomeIcon icon={faReply} />
-        </IconButton> */}
       </Box>
     </Box>
   );
