@@ -1,3 +1,4 @@
+
 import React, {useEffect, useState} from "react";
 import {BottomNavigation, BottomNavigationAction} from "@mui/material";
 import {useAuthContext} from "../../InfiniteContext";
@@ -6,7 +7,6 @@ import {Link} from "react-router-dom";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import PublicIcon from '@mui/icons-material/Public';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
-
 const Navigation = () => {
 	const [value, setValue] = useState(0);
 	const {setActiveTab} = useAuthContext();
