@@ -34,9 +34,7 @@ export const InfiniteProvider: FC<{ children: ReactNode }> = ({ children }) => {
       setMyEmail(email);
     }
   }, []);
-
   axios.defaults.baseURL = "https://api.infinite1.app";
-  // axios.defaults.baseURL = "https://infinite1.app";
   axios.defaults.headers.common["Authorization"] = `Bearer ${myEmail ?? ""}`;
 
   return (

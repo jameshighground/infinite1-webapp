@@ -89,9 +89,6 @@ function PrayItem({ item }: Props) {
         <IconButton color="primary">
           <FontAwesomeIcon icon={faHandsPraying} />
         </IconButton>
-        {/* <IconButton>
-          <FontAwesomeIcon icon={faReply} />
-        </IconButton> */}
       </Box>
     </Box>
   );
