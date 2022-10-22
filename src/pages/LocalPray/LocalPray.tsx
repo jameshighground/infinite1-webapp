@@ -59,6 +59,11 @@ const LocalPray = () => {
   if (error) {
   }
 
+  const onClickOkHandler = async () => {
+    // Prayer List Modal Popup
+    setTimeout(() => setIsSelected(true), 100);
+  };
+
   return (
     <div>
       <ReactMapGL
@@ -118,6 +123,7 @@ const LocalPray = () => {
               select={() => {
                 setIsSelected(true);
               }}
+              okTempHandler={onClickOkHandler}
               cancelTemp={() => {
                 setTempPosition(null);
               }}

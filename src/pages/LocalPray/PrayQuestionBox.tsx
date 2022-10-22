@@ -1,11 +1,33 @@
 import React, { FC } from "react";
+import GoogleLogin from "react-google-login";
 import Column from "../../components/Column";
 import { PrayQuestionBoxContainer } from "./localPrayStyle";
 
-const PrayQuestionBox: FC<{ cancelTemp(): void; select(): void }> = ({
-  cancelTemp,
-  select,
-}) => {
+type Props = {
+  okTempHandler: () => void;
+  cancelTemp: () => void;
+  select: () => void;
+};
+
+const clientId =
+  "1076100753398-65qgajcbv8mfg22hdba71bsjem77tmev.apps.googleusercontent.com";
+
+const PrayQuestionBox: FC<Props> = ({ okTempHandler, cancelTemp, select }) => {
+  const email = localStorage.getItem("email");
+
+  const onSuccess = async (response: any) => {
+    const {
+      profileObj: { email },
+    } = response;
+
+    localStorage.setItem("email", email);
+    okTempHandler();
+  };
+
+  const onFailure = (error: any) => {
+    console.log(error);
+  };
+
   return (
     <PrayQuestionBoxContainer
       style={{
@@ -17,13 +39,29 @@ const PrayQuestionBox: FC<{ cancelTemp(): void; select(): void }> = ({
     >
       <span>이 곳을 위해서 기도하시겠어요?</span>
       <Column isRow={true} gap={4}>
-        <button
-          onClick={() => {
-            setTimeout(select, 100);
-          }}
-        >
-          네
-        </button>
+        {!email ? (
+          <GoogleLogin
+            clientId={clientId}
+            onSuccess={onSuccess}
+            onFailure={onFailure}
+            cookiePolicy={"single_host_origin"}
+            buttonText="Google Login"
+            render={(renderProps) => (
+              <button
+                onClick={() => {
+                  renderProps.onClick();
+                }}
+              >
+                네
+              </button>
+            )}
+          />
+        ) : (
+          <>
+            <button onClick={okTempHandler}>네</button>
+          </>
+        )}
+
         <button
           onClick={() => {
             setTimeout(cancelTemp, 100);
