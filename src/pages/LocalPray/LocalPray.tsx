@@ -153,10 +153,16 @@ const LocalPray = () => {
         ))}
       </ReactMapGL>
 
-      {isSelected && (
+      {isSelected && tempPosition && (
         <Modal
+          position={{ lat: tempPosition.latitude, lng: tempPosition.longitude }}
+          myPosition={{
+            real_lng: myPosition.longitude,
+            real_lat: myPosition.latitude,
+          }}
           close={() => {
             setIsSelected(false);
+            setTempPosition(null);
           }}
         />
       )}

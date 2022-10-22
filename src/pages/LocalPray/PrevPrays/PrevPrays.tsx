@@ -26,6 +26,8 @@ const PrevPrays: FC<{
       latitude={prayData.lat}
       onClick={() => {
         offTempPosition();
+
+        console.log(prayData);
         URLSearch.set("lat", String(prayData.lat));
         URLSearch.set("lng", String(prayData.lng));
         navigate(location.pathname + "?" + URLSearch.toString());
@@ -37,7 +39,7 @@ const PrevPrays: FC<{
           fontSize: 24,
         }}
       />
-      {selectedLat === prayData.lat && selectedLng === prayData.lng && (
+      {selectedLat == prayData.lat && selectedLng == prayData.lng && (
         <ChainModal
           myPosition={myPosition}
           position={{

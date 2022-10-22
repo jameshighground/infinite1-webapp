@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Box } from "@mui/system";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHandsPraying, faReply } from "@fortawesome/free-solid-svg-icons";
+import { faHandsPraying } from "@fortawesome/free-solid-svg-icons";
 import { Button, IconButton } from "@mui/material";
-import axios from "axios";
 import useSWR from "swr";
 import { PrayType, swrFetcher } from "../interface";
 import { useAuthContext } from "../InfiniteContext";

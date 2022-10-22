@@ -9,9 +9,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { TextField } from "@mui/material";
-import { useForm } from "react-hook-form";
 import axios from "axios";
-import { FC } from "react";
+import { FC, useState } from "react";
+import { useAuthContext } from "../../InfiniteContext";
+import { MyPosition } from "../../interface";
+import { mutate } from "swr";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -22,21 +24,33 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const Modal: FC<{ close(): void }> = ({ close }) => {
-  const [open, setOpen] = React.useState(true);
-  const { register, handleSubmit } = useForm();
+const Modal: FC<{
+  position: { lat: number; lng: number };
+  myPosition: MyPosition;
+  close(): void;
+}> = ({ position, myPosition, close }) => {
+  const { myEmail } = useAuthContext();
 
-  const onSubmit = async (data: any) => {
-    const email = localStorage.getItem("email");
-    await axios
-      .post(
-        `/api/v1/${email}/pray`,
-        {},
-        { headers: { Authorization: `Bearer ${email}` } }
-      )
-      .then((res) => {
-        console.log("res: ", res);
-      });
+  const [open, setOpen] = React.useState(true);
+  const [prayText, setPrayText] = useState<string>("");
+
+  const onSubmit = async (data: string) => {
+    try {
+      await axios.post(
+        `/api/v1/${myEmail}/pray`,
+        {
+          ...position,
+          ...myPosition,
+          content: data,
+          refid: 0,
+        },
+        { headers: { Authorization: `Bearer ${myEmail}` } }
+      );
+      close();
+      await mutate("/api/v1/pray");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -76,7 +90,9 @@ const Modal: FC<{ close(): void }> = ({ close }) => {
           multiline
           rows={8}
           sx={{ padding: 5 }}
-          {...register("content")}
+          onChange={(e) => {
+            setPrayText(e.target.value);
+          }}
         />
         <div
           style={{
@@ -89,7 +105,12 @@ const Modal: FC<{ close(): void }> = ({ close }) => {
           <Button variant="outlined" onClick={close}>
             Cancel
           </Button>
-          <Button variant="contained" onClick={handleSubmit(onSubmit)}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              onSubmit(prayText);
+            }}
+          >
             Submit
           </Button>
         </div>
