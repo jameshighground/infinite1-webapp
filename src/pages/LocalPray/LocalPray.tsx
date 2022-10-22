@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { PrayChain } from "./localPrayStyle";
 import ReactMapGL, { Marker } from "react-map-gl";
 import { FmdGood } from "@mui/icons-material";
 import PrayQuestionBox from "./PrayQuestionBox";
 import mapboxgl from "mapbox-gl";
 import Modal from "../../components/modal/Modal";
-import { set } from "react-hook-form";
 import RecommendButton from "./RecommendButton/RecommendButton";
 import { PrayType } from "../../interface";
 import { dummyData } from "./dummyData";
@@ -52,6 +50,11 @@ const LocalPray = () => {
       });
     });
   }, []);
+
+  const onClickOkHandler = async () => {
+    // Prayer List Modal Popup
+    setTimeout(() => setIsSelected(true), 100);
+  };
 
   return (
     <div>
@@ -112,6 +115,7 @@ const LocalPray = () => {
               select={() => {
                 setIsSelected(true);
               }}
+              okTempHandler={onClickOkHandler}
               cancelTemp={() => {
                 setTempPosition(null);
               }}
