@@ -1,19 +1,25 @@
 import React, { FC } from "react";
 import mapboxgl from "mapbox-gl";
+import styled from "styled-components";
+
+const RecommendButtonDiv = styled.div`
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: white;
+  cursor: pointer;
+
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 2px solid #c9c9c9;
+`;
 
 const RecommendButton: FC<{
   setTempPosition(e: { longitude: number; latitude: number } | null): void;
   map: mapboxgl.Map;
 }> = ({ setTempPosition, map }) => {
   return (
-    <span
-      style={{
-        position: "fixed",
-        top: 10,
-        right: 10,
-        backgroundColor: "white",
-        cursor: "pointer",
-      }}
+    <RecommendButtonDiv
       onClick={async () => {
         setTempPosition(null);
 
@@ -34,7 +40,7 @@ const RecommendButton: FC<{
       }}
     >
       Recommend
-    </span>
+    </RecommendButtonDiv>
   );
 };
 
