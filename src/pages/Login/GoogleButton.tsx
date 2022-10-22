@@ -1,8 +1,7 @@
 import React from "react";
 import GoogleLogin from "react-google-login";
 
-// const clientId = "792430201676-gf9s754qrgp7s6krbm1diq7adf0duu5a.apps.googleusercontent.com";
-const clientId = "1076100753398-65qgajcbv8mfg22hdba71bsjem77tmev.apps.googleusercontent.com";
+const clientId = "792430201676-gf9s754qrgp7s6krbm1diq7adf0duu5a.apps.googleusercontent.com";
 
 type Props = {
   onSubmit: Function;
