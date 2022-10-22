@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { PrayChain } from "./localPrayStyle";
 import ReactMapGL, { Marker } from "react-map-gl";
 import { FmdGood } from "@mui/icons-material";
 import PrayQuestionBox from "./PrayQuestionBox";
 import mapboxgl from "mapbox-gl";
 import Modal from "../../components/modal/Modal";
-import { set } from "react-hook-form";
 import RecommendButton from "./RecommendButton/RecommendButton";
-import { PrayType } from "../../interface";
-import { dummyData } from "./dummyData";
+import { PrayType, SimplePrayType, swrFetcher } from "../../interface";
 import PrevPrays from "./PrevPrays/PrevPrays";
+import useSWR from "swr";
 
 const apiKey =
   "pk.eyJ1IjoiZGF5ZGF5LWluZmluaXRlIiwiYSI6ImNsOWlyZjY2ajBlbGszcG9kb2Rjd3pvYzkifQ.M7sMVIworroHZGarmPwvmQ";
@@ -18,7 +16,10 @@ const LocalPray = () => {
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [map, setMap] = useState<mapboxgl.Map | null>(null);
 
-  const [prevPrayData, setPrevPrayData] = useState<Array<PrayType>>(dummyData);
+  const { data, error } = useSWR<Array<SimplePrayType>>(
+    "/api/v1/pray",
+    swrFetcher
+  );
 
   const [myPosition, setMyPosition] = useState<{
     latitude: number;
@@ -52,6 +53,11 @@ const LocalPray = () => {
       });
     });
   }, []);
+  if (!data) {
+    return <div></div>;
+  }
+  if (error) {
+  }
 
   return (
     <div>
@@ -119,7 +125,7 @@ const LocalPray = () => {
           </Marker>
         )}
 
-        {prevPrayData.map((prayPoint, index) => (
+        {data.map((prayPoint, index) => (
           <PrevPrays
             key={"pray" + index}
             prayData={prayPoint}
