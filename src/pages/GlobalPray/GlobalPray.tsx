@@ -49,16 +49,18 @@ const GlobalPray = () => {
     <div>
       <Autocomplete
         disablePortal
-        id="combo-box-demo"
+        id="combo-box-country"
         options={countries}
-        sx={{ width: 300 }}
-        renderInput={(params) => <TextField {...params} label="Movie" />}
+        sx={{ width: 300, position: 'absolute', }}
+        renderInput={(params) => <TextField {...params} label="Country" />}
       ></Autocomplete>
       <ReactMapGL
         {...viewport}
         style={{ width: "100vw", height: "100vh" }}
         mapStyle="mapbox://styles/dayday-infinite/cl9irr2mo000w14qqyqmgvlpg"
         mapboxAccessToken={apiKey}
+        projection='globe' //'albers' | 'equalEarth' | 'equirectangular' | 'lambertConformalConic' | 'mercator' | 'naturalEarth' | 'winkelTripel';
+        zoom={0}
         onClick={
           tempPosition
             ? (e) => {}
@@ -71,46 +73,8 @@ const GlobalPray = () => {
         }
         onMove={(evt) => setViewport(evt.viewState)}
       >
-        <Marker longitude={myPosition.longitude} latitude={myPosition.latitude}>
-          <FmdGood
-            className={"flip-in-ver-right"}
-            style={{
-              color: "red",
-              fontSize: 24,
-            }}
-          />
-        </Marker>
-        {tempPosition && (
-          <Marker
-            longitude={tempPosition.longitude}
-            latitude={tempPosition.latitude}
-            style={{
-              position: "relative",
-            }}
-          >
-            <FmdGood
-              className={"flip-in-ver-right"}
-              style={{
-                color: "green",
-                fontSize: 24,
-              }}
-            />
-          </Marker>
-        )}
-        {tempPosition && (
-          <Marker
-            longitude={tempPosition.longitude}
-            latitude={tempPosition.latitude}
-          >
-          </Marker>
-        )}
+        
       </ReactMapGL>
-
-      {selectedChain && (
-        <PrayChain>
-          <span>Pray Chain</span>
-        </PrayChain>
-      )}
 
       <span
         style={{
