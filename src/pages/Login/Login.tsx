@@ -15,11 +15,7 @@ const Login = () => {
     console.log(email);
     console.log(nickname);
   };
-  return (
-    <div>
-      <GoogleButton onSubmit={onSubmit} />
-    </div>
-  );
+  return <div>{/* <GoogleButton onSubmit={onSubmit} /> */}</div>;
 };
 
 export default Login;

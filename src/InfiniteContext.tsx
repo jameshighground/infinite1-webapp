@@ -19,6 +19,7 @@ export const InfiniteProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [myId, setMyId] = useState<string>("");
   const [screenIndex, setScreenIndex] = useState<number>(0);
 
+  axios.defaults.baseURL = "https://infinite1.app";
   return (
     <AuthContext.Provider
       value={{
