@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
+import { useAuthContext } from "../../InfiniteContext";
 
 
 const clientId = "792430201676-gf9s754qrgp7s6krbm1diq7adf0duu5a.apps.googleusercontent.com";
@@ -12,9 +13,7 @@ type Props = {
 const GoogleButton = (props: Props) => {
   const { onSubmit } = props;
 
-  const [profile, setProfile] = useState<string | null>(
-    localStorage.getItem("email")
-  );
+  const { myEmail, setMyEmail } = useAuthContext();
 
   const onSuccess = async (response: any) => {
     const {
@@ -30,7 +29,7 @@ const GoogleButton = (props: Props) => {
     });
 
     localStorage.setItem("email", email);
-    setProfile(email);
+    setMyEmail(email);
   };
 
   const onFailure = (error: any) => {
@@ -38,13 +37,13 @@ const GoogleButton = (props: Props) => {
   };
 
   const logOut = () => {
-    setProfile(null);
+    setMyEmail("");
     localStorage.clear();
   };
 
   return (
     <div>
-      {profile ? (
+      {myEmail ? (
         <GoogleLogout
           clientId={clientId}
           buttonText="Logout"

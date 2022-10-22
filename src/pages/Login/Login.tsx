@@ -1,5 +1,4 @@
 import React from "react";
-import GoogleButton from "./GoogleButton";
 
 type SubmitType = {
   socialId: string;
