@@ -7,15 +7,15 @@ const Home = () => {
   const { screenIndex } = useAuthContext();
   return (
     <>
-      {screenIndex === Screen.LOCAL ? (
-        <>
-          <Modal />
-        </>
-      ) : screenIndex === Screen.NATIONAL ? (
-        <></>
-      ) : (
-        <></>
-      )}
+      {/*//   {screenIndex === Screen.LOCAL ? (*/}
+      {/*//     <>*/}
+      {/*//       <Modal />*/}
+      {/*//     </>*/}
+      {/*//   ) : screenIndex === Screen.NATIONAL ? (*/}
+      {/*//     <></>*/}
+      {/*//   ) : (*/}
+      {/*//     <></>*/}
+      {/*//   )}*/}
       <Navigation />
     </>
   );
