@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import GoogleLogin from "react-google-login";
 import Column from "../../components/Column";
+import { useAuthContext } from "../../InfiniteContext";
 import { PrayQuestionBoxContainer } from "./localPrayStyle";
 
 type Props = {
@@ -9,11 +10,11 @@ type Props = {
   select: () => void;
 };
 
-const clientId =
-  "1076100753398-65qgajcbv8mfg22hdba71bsjem77tmev.apps.googleusercontent.com";
+const clientId = "1076100753398-65qgajcbv8mfg22hdba71bsjem77tmev.apps.googleusercontent.com";
 
 const PrayQuestionBox: FC<Props> = ({ okTempHandler, cancelTemp, select }) => {
   const email = localStorage.getItem("email");
+  const { setMyEmail } = useAuthContext();
 
   const onSuccess = async (response: any) => {
     const {
@@ -21,6 +22,7 @@ const PrayQuestionBox: FC<Props> = ({ okTempHandler, cancelTemp, select }) => {
     } = response;
 
     localStorage.setItem("email", email);
+    setMyEmail(email);
     okTempHandler();
   };
 

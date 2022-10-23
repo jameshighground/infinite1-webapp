@@ -8,23 +8,20 @@ import RecommendButton from "./RecommendButton/RecommendButton";
 import { SimplePrayType, swrFetcher } from "../../interface";
 import PrevPrays from "./PrevPrays/PrevPrays";
 import useSWR from "swr";
+import { useAuthContext } from "../../InfiniteContext";
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 (mapboxgl as any).workerClass =
   // eslint-disable-next-line import/no-webpack-loader-syntax
   require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
-const apiKey =
-  "pk.eyJ1IjoiZGF5ZGF5LWluZmluaXRlIiwiYSI6ImNsOWlyZjY2ajBlbGszcG9kb2Rjd3pvYzkifQ.M7sMVIworroHZGarmPwvmQ";
+const apiKey = "pk.eyJ1IjoiZGF5ZGF5LWluZmluaXRlIiwiYSI6ImNsOWlyZjY2ajBlbGszcG9kb2Rjd3pvYzkifQ.M7sMVIworroHZGarmPwvmQ";
 
 const LocalPray = () => {
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [map, setMap] = useState<mapboxgl.Map | null>(null);
-
-  const { data, error } = useSWR<Array<SimplePrayType>>(
-    "/api/v1/pray",
-    swrFetcher
-  );
+  const { myEmail } = useAuthContext();
+  const { data, error } = useSWR<Array<SimplePrayType>>(`/api/v1/${myEmail}/pray`, swrFetcher);
 
   const [myPosition, setMyPosition] = useState<{
     latitude: number;
@@ -120,10 +117,7 @@ const LocalPray = () => {
           </Marker>
         )}
         {tempPosition && (
-          <Marker
-            longitude={tempPosition.longitude}
-            latitude={tempPosition.latitude}
-          >
+          <Marker longitude={tempPosition.longitude} latitude={tempPosition.latitude}>
             <PrayQuestionBox
               select={() => {
                 setIsSelected(true);
