@@ -21,7 +21,7 @@ const LocalPray = () => {
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [map, setMap] = useState<mapboxgl.Map | null>(null);
   const { myEmail } = useAuthContext();
-  const { data, error } = useSWR<Array<SimplePrayType>>(`/api/v1/${myEmail}/pray`, swrFetcher);
+  const { data, error } = useSWR<Array<SimplePrayType>>(`/api/v1/pray`, swrFetcher);
 
   const [myPosition, setMyPosition] = useState<{
     latitude: number;
@@ -119,9 +119,6 @@ const LocalPray = () => {
         {tempPosition && (
           <Marker longitude={tempPosition.longitude} latitude={tempPosition.latitude}>
             <PrayQuestionBox
-              select={() => {
-                setIsSelected(true);
-              }}
               okTempHandler={onClickOkHandler}
               cancelTemp={() => {
                 setTempPosition(null);
@@ -142,6 +139,13 @@ const LocalPray = () => {
             myPosition={{
               real_lng: myPosition.longitude,
               real_lat: myPosition.latitude,
+            }}
+            flyToPosition={(lat, lng) => {
+              map?.flyTo({
+                center: [lng, lat],
+                zoom: 12,
+              });
+              setTempPosition({ latitude: lat, longitude: lng });
             }}
           />
         ))}
