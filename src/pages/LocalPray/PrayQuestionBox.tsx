@@ -54,13 +54,13 @@ const PrayQuestionBox: FC<Props> = ({ okTempHandler, cancelTemp, select }) => {
                   renderProps.onClick();
                 }}
               >
-                네
+                Yes
               </button>
             )}
           />
         ) : (
           <>
-            <button onClick={okTempHandler}>네</button>
+            <button onClick={okTempHandler}>Yes</button>
           </>
         )}
 
@@ -69,7 +69,7 @@ const PrayQuestionBox: FC<Props> = ({ okTempHandler, cancelTemp, select }) => {
             setTimeout(cancelTemp, 100);
           }}
         >
-          아니오
+          No
         </button>
       </Column>
     </PrayQuestionBoxContainer>
