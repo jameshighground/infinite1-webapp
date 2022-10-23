@@ -6,8 +6,7 @@ import {TagCloud} from "react-tagcloud";
 import {keyframes} from "styled-components";
 import { AnimatedPrayer } from "./AnimatedPrayer";
 
-mapboxgl.accessToken =
-	"pk.eyJ1IjoiZGF5ZGF5LWluZmluaXRlIiwiYSI6ImNsOWlyZjY2ajBlbGszcG9kb2Rjd3pvYzkifQ.M7sMVIworroHZGarmPwvmQ";
+mapboxgl.accessToken = process.env.MAPBOX_KEY!;
 
 const prayers = [
 	{value: "Holy Spirit, come upon this nation!", count: 38},

@@ -2,8 +2,7 @@ import React, { FC } from "react";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 import { useAuthContext } from "../../InfiniteContext";
 
-const clientId =
-  "1076100753398-65qgajcbv8mfg22hdba71bsjem77tmev.apps.googleusercontent.com";
+const clientId = process.env.GOOGLE_CLIENT_ID!;
 
 type Props = {
   component: React.ReactNode;
