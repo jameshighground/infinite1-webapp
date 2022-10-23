@@ -37,7 +37,7 @@ const PrayQuestionBox: FC<Props> = ({ okTempHandler, cancelTemp, select }) => {
       }}
       className={"fade-in-top"}
     >
-      <span>이 곳을 위해서 기도하시겠어요?</span>
+      <span>Would you like to pray for this place?</span>
       <Column isRow={true} gap={4}>
         {!email ? (
           <GoogleLogin
