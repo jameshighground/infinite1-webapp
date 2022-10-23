@@ -15,13 +15,17 @@ import { useAuthContext } from "../../InfiniteContext";
   // eslint-disable-next-line import/no-webpack-loader-syntax
   require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
-const apiKey = "pk.eyJ1IjoiZGF5ZGF5LWluZmluaXRlIiwiYSI6ImNsOWlyZjY2ajBlbGszcG9kb2Rjd3pvYzkifQ.M7sMVIworroHZGarmPwvmQ";
+const apiKey =
+  "pk.eyJ1IjoiZGF5ZGF5LWluZmluaXRlIiwiYSI6ImNsOWlyZjY2ajBlbGszcG9kb2Rjd3pvYzkifQ.M7sMVIworroHZGarmPwvmQ";
 
 const LocalPray = () => {
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [map, setMap] = useState<mapboxgl.Map | null>(null);
   const { myEmail } = useAuthContext();
-  const { data, error } = useSWR<Array<SimplePrayType>>(`/api/v1/${myEmail}/pray`, swrFetcher);
+  const { data, error } = useSWR<Array<SimplePrayType>>(
+    `/api/v1/pray`,
+    swrFetcher
+  );
 
   const [myPosition, setMyPosition] = useState<{
     latitude: number;
@@ -117,11 +121,11 @@ const LocalPray = () => {
           </Marker>
         )}
         {tempPosition && (
-          <Marker longitude={tempPosition.longitude} latitude={tempPosition.latitude}>
+          <Marker
+            longitude={tempPosition.longitude}
+            latitude={tempPosition.latitude}
+          >
             <PrayQuestionBox
-              select={() => {
-                setIsSelected(true);
-              }}
               okTempHandler={onClickOkHandler}
               cancelTemp={() => {
                 setTempPosition(null);

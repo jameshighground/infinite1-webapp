@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 import { useAuthContext } from "../../InfiniteContext";
 
-
-const clientId = "792430201676-gf9s754qrgp7s6krbm1diq7adf0duu5a.apps.googleusercontent.com";
-
+const clientId =
+  "792430201676-gf9s754qrgp7s6krbm1diq7adf0duu5a.apps.googleusercontent.com";
 
 type Props = {
   onSubmit: Function;

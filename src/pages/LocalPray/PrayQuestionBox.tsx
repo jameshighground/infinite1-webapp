@@ -7,12 +7,13 @@ import { PrayQuestionBoxContainer } from "./localPrayStyle";
 type Props = {
   okTempHandler: () => void;
   cancelTemp: () => void;
-  select: () => void;
+  isChain?: boolean;
 };
 
-const clientId = "1076100753398-65qgajcbv8mfg22hdba71bsjem77tmev.apps.googleusercontent.com";
+const clientId =
+  "1076100753398-65qgajcbv8mfg22hdba71bsjem77tmev.apps.googleusercontent.com";
 
-const PrayQuestionBox: FC<Props> = ({ okTempHandler, cancelTemp, select }) => {
+const PrayQuestionBox: FC<Props> = ({ okTempHandler, cancelTemp, isChain }) => {
   const email = localStorage.getItem("email");
   const { setMyEmail } = useAuthContext();
 
@@ -32,14 +33,17 @@ const PrayQuestionBox: FC<Props> = ({ okTempHandler, cancelTemp, select }) => {
 
   return (
     <PrayQuestionBoxContainer
+      themeColor={isChain ? "blue" : "green"}
       style={{
-        color: "green",
-
         transform: "translateX(-50%)",
       }}
       className={"fade-in-top"}
     >
-      <span>Would you like to pray for this place?</span>
+      <span>
+        {isChain
+          ? "Would you also like to pray for this place?"
+          : "Would you like to pray for this place?"}
+      </span>
       <Column isRow={true} gap={4}>
         {!email ? (
           <GoogleLogin
