@@ -49,8 +49,8 @@ const Modal: FC<{
         },
         { headers: { Authorization: `Bearer ${myEmail}` } }
       );
+      await mutate(`/api/v1/pray`);
       close();
-      await mutate(`/api/v1/${myEmail}/pray`);
     } catch (e) {
       console.log(e);
     }
@@ -61,10 +61,19 @@ const Modal: FC<{
       {/*<Button variant="outlined" onClick={handleClickOpen}>*/}
       {/*  Open full-screen dialog*/}
       {/*</Button>*/}
-      <Dialog fullScreen open={open} onClose={close} TransitionComponent={Transition}>
+      <Dialog
+        fullScreen
+        open={open}
+        onClose={close}
+        TransitionComponent={Transition}
+      >
         <AppBar sx={{ position: "relative" }}>
           <Toolbar>
-            <Typography sx={{ ml: 2, flex: 1, textAlign: "center" }} variant="h6" component="div">
+            <Typography
+              sx={{ ml: 2, flex: 1, textAlign: "center" }}
+              variant="h6"
+              component="div"
+            >
               Start New Prayer Chain
             </Typography>
             <IconButton

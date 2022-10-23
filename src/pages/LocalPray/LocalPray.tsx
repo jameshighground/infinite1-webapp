@@ -147,6 +147,13 @@ const LocalPray = () => {
               real_lng: myPosition.longitude,
               real_lat: myPosition.latitude,
             }}
+            flyToPosition={(lat, lng) => {
+              map?.flyTo({
+                center: [lng, lat],
+                zoom: 12,
+              });
+              setTempPosition({ latitude: lat, longitude: lng });
+            }}
           />
         ))}
       </ReactMapGL>

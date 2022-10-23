@@ -46,7 +46,8 @@ const PrayQuestionBoxContainer = styled.div<{
 
   button {
     width: fit-content;
-    background-color: ${(props) => (props.themeColor ? "#9eabe5" : "#d3f1df")};
+    background-color: ${(props) =>
+      props.themeColor === "blue" ? "#9eabe5" : "#d3f1df"};
     border: none;
     border-radius: 4px;
     padding: 4px 16px;

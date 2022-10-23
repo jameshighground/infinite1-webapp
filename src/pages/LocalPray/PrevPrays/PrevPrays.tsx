@@ -11,7 +11,8 @@ const PrevPrays: FC<{
   myPosition: MyPosition;
   prayData: SimplePrayType;
   offTempPosition(): void;
-}> = ({ prayData, myPosition, offTempPosition }) => {
+  flyToPosition(lat: number, lng: number): void;
+}> = ({ prayData, myPosition, offTempPosition, flyToPosition }) => {
   const { myEmail } = useAuthContext();
   const location = useLocation();
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ const PrevPrays: FC<{
             URLSearch.delete("lng");
             navigate(location.pathname + "?" + URLSearch.toString());
           }}
+          flyToPosition={flyToPosition}
         />
       )}
       {isSelected && (
