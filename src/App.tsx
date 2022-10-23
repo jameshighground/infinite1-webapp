@@ -7,6 +7,7 @@ import GlobalPray from "./pages/GlobalPray/GlobalPray";
 import Navigation from "./pages/navigation/Navigation";
 import MyPrayer from "./components/MyPrayer";
 import LogoWhite from "./assets/logo/logo_white.png";
+import LogoBlue from "./assets/logo/logo_blue.png"
 import Fadeout from "./components/Fadeout";
 
 function App() {
@@ -16,6 +17,13 @@ function App() {
   }, []);
   return (
     <div className="App">
+      <img src={LogoBlue} alt="logo" width={"100px"} style={{
+        position: "absolute",
+        left: 0,
+        top: 0,
+        zIndex: 2,
+
+      }} />
       <Fadeout visible={showLogo}>
         <img src={LogoWhite} alt="logo" width={"60%"} height={"60%"} />
       </Fadeout>
