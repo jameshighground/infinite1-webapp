@@ -5,9 +5,14 @@ import PrayQuestionBox from "./PrayQuestionBox";
 import mapboxgl from "mapbox-gl";
 import Modal from "../../components/modal/Modal";
 import RecommendButton from "./RecommendButton/RecommendButton";
-import { PrayType, SimplePrayType, swrFetcher } from "../../interface";
+import { SimplePrayType, swrFetcher } from "../../interface";
 import PrevPrays from "./PrevPrays/PrevPrays";
 import useSWR from "swr";
+
+/* eslint-disable @typescript-eslint/no-var-requires */
+(mapboxgl as any).workerClass =
+  // eslint-disable-next-line import/no-webpack-loader-syntax
+  require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 const apiKey =
   "pk.eyJ1IjoiZGF5ZGF5LWluZmluaXRlIiwiYSI6ImNsOWlyZjY2ajBlbGszcG9kb2Rjd3pvYzkifQ.M7sMVIworroHZGarmPwvmQ";
@@ -140,14 +145,24 @@ const LocalPray = () => {
                 setTempPosition(null);
               }, 100);
             }}
+            myPosition={{
+              real_lng: myPosition.longitude,
+              real_lat: myPosition.latitude,
+            }}
           />
         ))}
       </ReactMapGL>
 
-      {isSelected && (
+      {isSelected && tempPosition && (
         <Modal
+          position={{ lat: tempPosition.latitude, lng: tempPosition.longitude }}
+          myPosition={{
+            real_lng: myPosition.longitude,
+            real_lat: myPosition.latitude,
+          }}
           close={() => {
             setIsSelected(false);
+            setTempPosition(null);
           }}
         />
       )}

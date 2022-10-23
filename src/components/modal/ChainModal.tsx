@@ -9,12 +9,14 @@ import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { TextField } from "@mui/material";
-import { useForm } from "react-hook-form";
 import axios from "axios";
-import { FC } from "react";
+import { FC, useState } from "react";
 import styled from "styled-components";
-import useSWR from "swr";
-import { PrayType, swrFetcher } from "../../interface";
+import useSWR, { mutate } from "swr";
+import { MyPosition, PrayType, swrFetcher } from "../../interface";
+import { useAuthContext } from "../../InfiniteContext";
+import Column from "../Column";
+import dayjs from "dayjs";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -33,36 +35,41 @@ const PrevPrayText = styled.div`
   border: 1px solid #c9c9c9;
   border-radius: 4px;
 
-  margin: 40px;
   padding: 16.5px 14px;
   color: rgba(0, 0, 0, 0.87);
 `;
 
 const ChainModal: FC<{
+  myPosition: MyPosition;
   position: { lat: number; lng: number };
   close(): void;
-}> = ({ position, close }) => {
+}> = ({ myPosition, position, close }) => {
   const [open, setOpen] = React.useState(true);
-  const { register, handleSubmit } = useForm();
-
-  const email = localStorage.getItem("email");
+  const { myEmail } = useAuthContext();
+  const [prayText, setPrayText] = useState<string>("");
 
   const { data, error } = useSWR<Array<PrayType>>(
-    email ? `/api/v1/pray/${email}/${position.lat}/${position.lng}` : null,
+    myEmail ? `/api/v1/${myEmail}/pray/${position.lat}/${position.lng}` : null,
     swrFetcher
   );
-  console.log(data);
-  const onSubmit = async (data: any) => {
-    const email = localStorage.getItem("email");
-    await axios
-      .post(
-        `/api/v1/${email}/pray`,
-        {},
-        { headers: { Authorization: `Bearer ${email}` } }
-      )
-      .then((res) => {
-        console.log("res: ", res);
+
+  const onSubmit = async (content: string) => {
+    if (!data) return;
+
+    const mainPray = data.find((pray) => pray.refid === 0);
+
+    if (!mainPray) return;
+
+    try {
+      await axios.post(`/api/v1/${myEmail}/pray`, {
+        ...myPosition,
+        ...position,
+        content,
+        refid: mainPray.id,
       });
+      setPrayText("");
+      await mutate(`/api/v1/${myEmail}/pray/${position.lat}/${position.lng}`);
+    } catch (e) {}
   };
 
   if (error) {
@@ -100,16 +107,33 @@ const ChainModal: FC<{
             </IconButton>
           </Toolbar>
         </AppBar>
-        {data.map((pray, index) => (
-          <PrevPrayText key={"pray" + index}>{pray.content}</PrevPrayText>
-        ))}
+        <Column
+          gap={16}
+          style={{
+            margin: 40,
+          }}
+        >
+          {data.map((pray, index) => (
+            <PrevPrayText key={"pray" + index}>
+              <Column gap={16}>
+                <span>{pray.content}</span>
+                <span style={{ marginLeft: "auto", fontSize: 12 }}>
+                  {dayjs(pray.craetedate).format("YYYY/MM/DD h:mm A")}
+                </span>
+              </Column>
+            </PrevPrayText>
+          ))}
+        </Column>
         <TextField
           variant="outlined"
           placeholder="Let's Pray"
           multiline
           rows={8}
           sx={{ padding: 5 }}
-          {...register("content")}
+          value={prayText}
+          onChange={(e) => {
+            setPrayText(e.target.value);
+          }}
         />
         <div
           style={{
@@ -122,7 +146,12 @@ const ChainModal: FC<{
           <Button variant="outlined" onClick={close}>
             Cancel
           </Button>
-          <Button variant="contained" onClick={handleSubmit(onSubmit)}>
+          <Button
+            variant="contained"
+            onClick={async () => {
+              await onSubmit(prayText);
+            }}
+          >
             Submit
           </Button>
         </div>
