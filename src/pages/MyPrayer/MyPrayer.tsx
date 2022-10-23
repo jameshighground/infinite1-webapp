@@ -6,17 +6,56 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHandsPraying } from "@fortawesome/free-solid-svg-icons";
 import { Button, IconButton } from "@mui/material";
 import useSWR from "swr";
-import { PrayType, swrFetcher } from "../interface";
-import { useAuthContext } from "../InfiniteContext";
+import { PrayType, swrFetcher } from "../../interface";
+import { useAuthContext } from "../../InfiniteContext";
 import axios from "axios";
+import Column from "../../components/Column";
+import GoogleLoginLoader from "../Login/GoogleLoginLoader";
+import GoogleLoginButton from "../../components/GoogleLoginButton/GoogleLoginButton";
 
 export default function MyPrayer() {
   const { myEmail } = useAuthContext();
 
-  const { data, error } = useSWR<Array<PrayType>>(myEmail ? `/api/v1/${myEmail}/pray` : null, swrFetcher);
+  const { data, error } = useSWR<Array<PrayType>>(
+    myEmail ? `/api/v1/${myEmail}/pray` : null,
+    swrFetcher
+  );
   useEffect(() => {
     AOS.init();
   });
+
+  // need to log in
+  if (!myEmail) {
+    return (
+      <Column
+        gap={32}
+        style={{
+          height: "100vh",
+          justifyContent: "center",
+        }}
+      >
+        <span
+          style={{
+            fontSize: 24,
+            fontWeight: "bold",
+          }}
+        >
+          Please Login
+        </span>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <GoogleLoginLoader
+            component={<GoogleLoginButton onClick={() => {}} />}
+            okHandler={() => {}}
+          />
+        </div>
+      </Column>
+    );
+  }
 
   if (!data) {
     return <div></div>;
@@ -59,6 +98,7 @@ function PrayItem({ item }: Props) {
   const handlePray = () => {
     axios.post(`/api/v1/${myEmail}/pray/${item.id}`);
   };
+
   return (
     <Box
       data-aos="fade-up"

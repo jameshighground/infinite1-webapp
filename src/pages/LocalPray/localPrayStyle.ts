@@ -16,13 +16,16 @@ const PrayChain = styled.div`
   background-color: #61dafb;
 `;
 
-const PrayQuestionBoxContainer = styled.div`
+const PrayQuestionBoxContainer = styled.div<{
+  themeColor?: string;
+}>`
   display: flex;
   flex-direction: column;
   gap: 8px;
   align-items: center;
 
-  border: 2px solid green;
+  border: 2px solid
+    ${(props) => (props.themeColor ? props.themeColor : "green")};
   border-radius: 8px;
   padding: 16px;
 
@@ -35,6 +38,7 @@ const PrayQuestionBoxContainer = styled.div`
   margin-top: 15px;
   margin-left: 10px;
 
+  color: ${(props) => (props.themeColor ? props.themeColor : "green")};
   font-weight: bold;
   font-size: 14px;
 
@@ -42,7 +46,8 @@ const PrayQuestionBoxContainer = styled.div`
 
   button {
     width: fit-content;
-    background-color: #d3f1df;
+    background-color: ${(props) =>
+      props.themeColor === "blue" ? "#9eabe5" : "#d3f1df"};
     border: none;
     border-radius: 4px;
     padding: 4px 16px;

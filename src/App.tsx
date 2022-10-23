@@ -5,7 +5,7 @@ import Login from "./pages/Login/Login";
 import LocalPray from "./pages/LocalPray/LocalPray";
 import GlobalPray from "./pages/GlobalPray/GlobalPray";
 import Navigation from "./pages/navigation/Navigation";
-import MyPrayer from "./components/MyPrayer";
+import MyPrayer from "./pages/MyPrayer/MyPrayer";
 import LogoWhite from "./assets/logo/logo_white.png";
 import Fadeout from "./components/Fadeout";
 

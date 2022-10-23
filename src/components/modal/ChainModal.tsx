@@ -43,7 +43,8 @@ const ChainModal: FC<{
   myPosition: MyPosition;
   position: { lat: number; lng: number };
   close(): void;
-}> = ({ myPosition, position, close }) => {
+  flyToPosition(lat: number, lng: number): void;
+}> = ({ myPosition, position, close, flyToPosition }) => {
   const [open, setOpen] = React.useState(true);
   const { myEmail } = useAuthContext();
   const [prayText, setPrayText] = useState<string>("");
@@ -81,10 +82,19 @@ const ChainModal: FC<{
 
   return (
     <div>
-      <Dialog fullScreen open={open} onClose={close} TransitionComponent={Transition}>
+      <Dialog
+        fullScreen
+        open={open}
+        onClose={close}
+        TransitionComponent={Transition}
+      >
         <AppBar sx={{ position: "relative" }}>
           <Toolbar>
-            <Typography sx={{ ml: 2, flex: 1, textAlign: "center" }} variant="h6" component="div">
+            <Typography
+              sx={{ ml: 2, flex: 1, textAlign: "center" }}
+              variant="h6"
+              component="div"
+            >
               Carry on this Prayer Chain
             </Typography>
             <IconButton
@@ -109,7 +119,18 @@ const ChainModal: FC<{
               <Column gap={16}>
                 <span>{pray.content}</span>
                 <span style={{ marginLeft: "auto", fontSize: 12 }}>
-                  {dayjs(pray.craetedate).format("YYYY/MM/DD h:mm A")}
+                  {dayjs(pray.createDate).format("YYYY/MM/DD h:mm A")}
+                </span>
+                <span style={{ marginLeft: "auto", fontSize: 12 }}>
+                  From{" "}
+                  <Button
+                    onClick={() => {
+                      close();
+                      flyToPosition(pray.real_lat, pray.real_lng);
+                    }}
+                  >
+                    Here
+                  </Button>
                 </span>
               </Column>
             </PrevPrayText>

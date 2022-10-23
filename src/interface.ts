@@ -18,8 +18,8 @@ export type PrayType = {
   real_lng: number;
   content: string;
   refid: number;
-  craetedate: string;
-  updatedate: string;
+  createDate: string;
+  updateDate: string;
 
   amen: [];
   amenyn: 1 | 0;
