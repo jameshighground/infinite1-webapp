@@ -21,7 +21,7 @@ export type PrayType = {
   craetedate: string;
   updatedate: string;
 
-  amen: number;
+  amen: [];
   amenyn: 1 | 0;
 };
 

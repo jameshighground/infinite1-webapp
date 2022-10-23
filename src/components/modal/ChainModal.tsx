@@ -81,19 +81,10 @@ const ChainModal: FC<{
 
   return (
     <div>
-      <Dialog
-        fullScreen
-        open={open}
-        onClose={close}
-        TransitionComponent={Transition}
-      >
+      <Dialog fullScreen open={open} onClose={close} TransitionComponent={Transition}>
         <AppBar sx={{ position: "relative" }}>
           <Toolbar>
-            <Typography
-              sx={{ ml: 2, flex: 1, textAlign: "center" }}
-              variant="h6"
-              component="div"
-            >
+            <Typography sx={{ ml: 2, flex: 1, textAlign: "center" }} variant="h6" component="div">
               Carry on this Prayer Chain
             </Typography>
             <IconButton

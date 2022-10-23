@@ -8,14 +8,12 @@ import { Button, IconButton } from "@mui/material";
 import useSWR from "swr";
 import { PrayType, swrFetcher } from "../interface";
 import { useAuthContext } from "../InfiniteContext";
+import axios from "axios";
 
 export default function MyPrayer() {
   const { myEmail } = useAuthContext();
 
-  const { data, error } = useSWR<Array<PrayType>>(
-    myEmail ? `/api/v1/${myEmail}/pray` : null,
-    swrFetcher
-  );
+  const { data, error } = useSWR<Array<PrayType>>(myEmail ? `/api/v1/${myEmail}/pray` : null, swrFetcher);
   useEffect(() => {
     AOS.init();
   });
@@ -36,9 +34,10 @@ export default function MyPrayer() {
         My Prayers
       </span>
       <Box sx={{ width: "100%", marginTop: 6 }}>
-        {data.map((item) => (
+        {data?.map((item) => (
           <PrayItem key={item.id} item={item} />
         ))}
+        {data?.length == 0 && <Box>No Data</Box>}
       </Box>
       <Box sx={{ height: "56px" }}></Box>
     </div>
@@ -49,13 +48,16 @@ type Props = {
 };
 
 function PrayItem({ item }: Props) {
+  const { myEmail } = useAuthContext();
   const latLng = {
     lat: item.lat,
     lng: item.lng,
   };
-
   const handleClick = () => {
     console.log("handleClick >>");
+  };
+  const handlePray = () => {
+    axios.post(`/api/v1/${myEmail}/pray/${item.id}`);
   };
   return (
     <Box
@@ -85,8 +87,8 @@ function PrayItem({ item }: Props) {
         }}
       >
         <Box></Box>
-        <Box>{item.amen ?? 0}</Box>
-        <IconButton color="primary">
+        <Box>{item.amen?.length || 0}</Box>
+        <IconButton color="primary" onClick={handlePray}>
           <FontAwesomeIcon icon={faHandsPraying} />
         </IconButton>
       </Box>
