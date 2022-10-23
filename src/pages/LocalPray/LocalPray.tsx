@@ -15,7 +15,7 @@ import { useAuthContext } from "../../InfiniteContext";
   // eslint-disable-next-line import/no-webpack-loader-syntax
   require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
-const apiKey = process.env.MAPBOX_KEY;
+const apiKey = process.env.REACT_APP_MAPBOX_KEY;
 
 const LocalPray = () => {
   const [isSelected, setIsSelected] = useState<boolean>(false);
